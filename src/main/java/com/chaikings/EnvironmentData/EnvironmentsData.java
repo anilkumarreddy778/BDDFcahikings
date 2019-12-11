@@ -6,7 +6,7 @@ public class EnvironmentsData {
 	
 	public static final String URL = "http://steed26.biz/ck_beat/";
 	
-	public static final String browser= "FF"; // FF,chrome
+	public static final String browser= "chrome"; // FF,chrome
 	
 	public static final String Chrome_key = "webdriver.chrome.Driver";
 	public static final String Chrome_value = ".\\Drivers\\chromedriver.exe";
