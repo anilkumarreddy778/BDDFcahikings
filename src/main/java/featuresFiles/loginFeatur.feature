@@ -26,3 +26,15 @@ Given counter will login to chaikings site
 Then user will add some items to cart
 Then counter will click on conform order
 And order should be confrimed 
+
+@test4
+Scenario: login_as_manager_and_check_manager_able_to_login_or_not
+
+Given Manager in login page and verfiy login should dispaly
+Then enter manger username and password and click on submit button
+Then check weather succesfully logined or not
+And click on logout button
+Then verify login page should display
+
+
+

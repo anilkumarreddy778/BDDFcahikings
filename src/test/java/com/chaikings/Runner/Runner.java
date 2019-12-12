@@ -1,5 +1,7 @@
 package com.chaikings.Runner;
 
+
+
 import org.junit.runner.RunWith;
 
 import cucumber.api.CucumberOptions;
@@ -7,15 +9,16 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features= {"D:/anil/Anil QA-TE_A/test_data/eclips/java devlop/chaikings/src/main/java/featuresFiles/loginFeatur.feature"},
+		features= {".\\src\\main\\java\\featuresFiles"},
 		glue= {"com.chaikings.stepdefination"},
-		dryRun=false,
+		dryRun=true,
 		monochrome=true,
-		plugin= {"pretty","html:target/cucumber-html-report"})
+		//tags= {"@test1,@test2,@test3"},
+		plugin= {"pretty","json:target/cucumber-reports/cucumber.json"})
 
 public class Runner {
 	
-	
+}
 	//@RunWith(Cucumeber.class) - - @RunWith annotation tells Junit to run the class as Cucumber Test
 	//features - - Features keyword provides the location of the feature file.
 	//glue - - Glue keyword provides the path of the step Defination class.
@@ -32,4 +35,4 @@ public class Runner {
 	//For each scenario step in your feature file, you should add a step definition method.
 	// This way, all your steps in feature files will have a method associated to it.
 	//So that, when you run the feature file, Cucumber would execute the step definition methods linked with the steps.
-}
+
