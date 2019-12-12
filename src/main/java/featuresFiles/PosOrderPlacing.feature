@@ -12,7 +12,7 @@ Then counter user should able to navigate all screens
 And add some items to cart 
 And check in cart added items should display
 Then place order as cash order
-And then go to billing screen 
+And then go to billing screen
 Then place order should display
 And clcik on bill and take screenshot
 Then logout from POS Screen

@@ -216,5 +216,33 @@ public class LoginStepDef extends BrowserOpen{
 	}
 	
 	
+	//4th scenario
+	@Given("^Manager in login page and verfiy login should dispaly$")
+	public void manager_in_login_page_and_verfiy_login_should_dispaly() {
+	   
+	}
+
+	@Then("^enter manger username and password and click on submit button$")
+	public void enter_manger_username_and_password_and_click_on_submit_button() {
+	  
+	}
+
+	@Then("^check weather succesfully logined or not$")
+	public void check_weather_succesfully_logined_or_not() {
+	   
+	}
+
+	@Then("^click on logout button$")
+	public void click_on_logout_button() {
+	  
+	}
+
+	@Then("^verify login page should display$")
+	public void verify_login_page_should_display() {
+	   
+	}
+
+	
+	
 	
 }
