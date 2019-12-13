@@ -11,7 +11,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
 		features= {".\\src\\main\\java\\featuresFiles"},
 		glue= {"com.chaikings.stepdefination"},
-		dryRun=true,
+		dryRun=false,
 		monochrome=true,
 		//tags= {"@test1,@test2,@test3"},
 		plugin= {"pretty","json:target/cucumber-reports/cucumber.json"})
