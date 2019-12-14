@@ -1,5 +1,6 @@
 package com.cahikings.GenericFiles;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -29,7 +30,9 @@ public class BrowserOpen {
 	}
 	
 	driver.get(EnvironmentsData.URL);
-	//driver.manage().window().maximize();	
+	Thread.sleep(2000);
+	//driver.manage().window().maximize();
+	driver.manage().window().setSize(new Dimension(1900, 1080));
 	
 	}
 }

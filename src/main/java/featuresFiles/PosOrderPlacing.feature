@@ -1,5 +1,5 @@
 @Order_place
-Feature: From POS screen Order should got place
+Feature: Test Oreder placeing from POS Screen
 
 @test5
 Scenario: login_as_counter_and_place_an_order

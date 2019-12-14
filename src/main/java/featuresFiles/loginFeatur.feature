@@ -1,5 +1,5 @@
 @Login_feature
-Feature: Chaikings Beta login
+Feature: Test User Login Functionality Screen 
 
 @test1
 Scenario: login_with_correct_credentials

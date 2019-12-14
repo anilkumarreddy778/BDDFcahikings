@@ -13,7 +13,7 @@ import cucumber.api.junit.Cucumber;
 		glue= {"com.chaikings.stepdefination"},
 		dryRun=false,
 		monochrome=true,
-		//tags= {"@test1,@test2,@test3"},
+		tags= {"@test1"},
 		plugin= {"pretty","json:target/cucumber-reports/cucumber.json"})
 
 public class Runner {
