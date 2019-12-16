@@ -14,16 +14,20 @@ import com.cahikings.GenericFiles.ExcelTestDataHandler;
 import com.cahikings.GenericFiles.ReadingProepertyXpath;
 import com.chaikings.EnvironmentData.EnvironmentsData;
 
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import gherkin.ast.Feature;
 
 public class LoginStepDef extends BrowserOpen {
 
-	ExcelDataHandlerGetterSetter testdata = new ExcelDataHandlerGetterSetter();
+	static ExcelDataHandlerGetterSetter testdata = new ExcelDataHandlerGetterSetter();
 
 	public static Properties prop;
+	static String scenario_name=null;
+	
 
 	/*
 	 * // public LoginStepDef() throws IOException { // // prop =new Properties();
@@ -34,9 +38,10 @@ public class LoginStepDef extends BrowserOpen {
 	 */
 
 	@Before
-	public void openBrowser() throws InterruptedException, IOException {
+	public void openBrowser(Scenario scenario) throws InterruptedException, IOException {
 		BrowserOpen.initialization();
 		prop = ReadingProepertyXpath.readxpathdata(EnvironmentsData.Xpath_property);
+		scenario_name=scenario.getName();
 	}
 
 	@After
@@ -49,7 +54,7 @@ public class LoginStepDef extends BrowserOpen {
 	// 1nd scenario
 	@Given("^User is already on chaiking login page$")
 	public void user_is_already_on_chaiking_login_page() throws Throwable {
-
+	
 		System.out.println("Browser got open succesfuly..");
 	}
 
@@ -63,19 +68,20 @@ public class LoginStepDef extends BrowserOpen {
 	@Given("^enter username and password$")
 	public void enter_username_and_password() throws Throwable {
 
+		System.out.println(scenario_name);
 		Map<String, String> testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,
-				EnvironmentsData.FistSheet, EnvironmentsData.testcase);
+				EnvironmentsData.FistSheet, "'"+scenario_name+"'");
 		testdata.setTestDataInMap(testdatainmpa);// setter
 
-		Map<String, String> data = testdata.getTestDataInMap();
-		System.out.println(data.get("Data_1"));
-		driver.findElement(By.xpath(prop.getProperty("Login_username_xpath"))).sendKeys(testdatainmpa.get("Data_2"));
+		Map<String, String> data = testdata.getTestDataInMap();//getter
+		driver.findElement(By.xpath(prop.getProperty("Login_username_xpath"))).sendKeys(testdatainmpa.get("Data_1"));
 		Thread.sleep(3000);
-		driver.findElement(By.xpath(prop.getProperty("Login_password_xpath"))).sendKeys(testdatainmpa.get("Data_4"));
+		driver.findElement(By.xpath(prop.getProperty("Login_password_xpath"))).sendKeys(testdatainmpa.get("Data_2"));
 		driver.findElement(By.xpath(prop.getProperty("Sign_up_xpath"))).click();
 		Thread.sleep(3000);
 
 		String dd = driver.getCurrentUrl();
+		
 		if (dd.equals(EnvironmentsData.URL)) {
 			System.out.println("I am in force login screen....");
 			String forcelogintext = driver.findElement(By.xpath(prop.getProperty("force_login_xpath"))).getText();
@@ -83,6 +89,7 @@ public class LoginStepDef extends BrowserOpen {
 			WebElement clicktext = driver.findElement(By.xpath(prop.getProperty("force_login_linkTextclick_xpath")));
 			System.out.println(clicktext.getText());
 			clicktext.click();
+			orderPlaceing();
 		}
 			if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL)) {
 				System.out.println("Login succesfully.....");
@@ -96,35 +103,30 @@ public class LoginStepDef extends BrowserOpen {
 				driver.findElement(By.xpath(prop.getProperty("opeing_cash_statrt_button_xpath"))).click();
 				System.out.println("Succesfully POS Screen Displayed.");
 
-				WebElement ckHome = driver.findElement(By.xpath(prop.getProperty("ck_dropudown_xpath")));
-				System.out.println(ckHome.getText());
-				ckHome.click();
-				Thread.sleep(2000);
-				WebElement holdlogout = driver.findElement(By.xpath(prop.getProperty("hold_and_logout_xpath")));
-				System.out.println(holdlogout.getText());
-				holdlogout.click();
+				orderPlaceing();
+				logout();
 			}
 
-		  if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL)) {
-			System.out.println("i am Satrt screen.....");
-			System.out.println(driver.getCurrentUrl());
-			String open_cash_date = driver.findElement(By.xpath(prop.getProperty("opeing_cash_date_xpath"))).getText();
-			System.out.println("Open counter data : " + open_cash_date);
-			String open_cash_amount = driver.findElement(By.xpath(prop.getProperty("opeing_cahs_xpath"))).getText();
-			System.out.println("open cash is : " + open_cash_amount);
-			System.out.println("Login succesfully.....");
-			driver.findElement(By.xpath(prop.getProperty("opeing_cash_statrt_button_xpath"))).click();
-			System.out.println("Succesfully POS Screen Displayed.");
-
-			WebElement ckHome = driver.findElement(By.xpath(prop.getProperty("ck_dropudown_xpath")));
-			System.out.println(ckHome.getText());
-			ckHome.click();
-			Thread.sleep(2000);
-			WebElement holdlogout = driver.findElement(By.xpath(prop.getProperty("hold_and_logout_xpath")));
-			System.out.println(holdlogout.getText());
-			holdlogout.click();
-
-		} 
+//		  if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL)) {
+//			System.out.println("i am Satrt screen.....");
+//			System.out.println(driver.getCurrentUrl());
+//			String open_cash_date = driver.findElement(By.xpath(prop.getProperty("opeing_cash_date_xpath"))).getText();
+//			System.out.println("Open counter data : " + open_cash_date);
+//			String open_cash_amount = driver.findElement(By.xpath(prop.getProperty("opeing_cahs_xpath"))).getText();
+//			System.out.println("open cash is : " + open_cash_amount);
+//			System.out.println("Login succesfully.....");
+//			driver.findElement(By.xpath(prop.getProperty("opeing_cash_statrt_button_xpath"))).click();
+//			System.out.println("Succesfully POS Screen Displayed.");
+//
+//			WebElement ckHome = driver.findElement(By.xpath(prop.getProperty("ck_dropudown_xpath")));
+//			System.out.println(ckHome.getText());
+//			ckHome.click();
+//			Thread.sleep(2000);
+//			WebElement holdlogout = driver.findElement(By.xpath(prop.getProperty("hold_and_logout_xpath")));
+//			System.out.println(holdlogout.getText());
+//			holdlogout.click();
+//
+//		} 
 		  
 		  if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_update_end_URL)) {
 			System.out.println("i am in Day out update screen");
@@ -146,9 +148,51 @@ public class LoginStepDef extends BrowserOpen {
 			Alert alert = driver.switchTo().alert();
 			Thread.sleep(3000);
 			alert.accept();
-
+			//orderPlaceing();
 		}
 
+		  
+		  
+	}
+	
+	public static void orderPlaceing() throws InterruptedException
+	  {
+		Map<String, String> data = testdata.getTestDataInMap();
+		
+		 driver.findElement(By.xpath(prop.getProperty("Black_chai_product_xpath"))).click();
+		 Thread.sleep(2000);
+		 driver.findElement(By.xpath(prop.getProperty("honey_add_product_xpath"))).click();
+		 Thread.sleep(2000);
+		 driver.findElement(By.xpath(prop.getProperty("category_search_xpath"))).sendKeys(data.get("Data_7"));
+		 Thread.sleep(2000);
+		 driver.findElement(By.xpath(prop.getProperty("maggi_product_xpath"))).click();
+		 Thread.sleep(2000);
+		 driver.findElement(By.xpath(prop.getProperty("maggi_add_xpath"))).click();
+		 Thread.sleep(2000);
+		 driver.findElement(By.xpath(prop.getProperty("quntity_increase_xpath"))).click();
+		 Thread.sleep(2000);
+		 driver.findElement(By.xpath(prop.getProperty("cash_order_xpath"))).click();
+		 Thread.sleep(3000);
+		 driver.findElement(By.xpath(prop.getProperty("order_confirm_xpath"))).click();		 
+		 Thread.sleep(2000);
+		 String amount =driver.findElement(By.xpath(prop.getProperty("cash_order_amount_xpath"))).getText();
+		 driver.findElement(By.xpath(prop.getProperty("cash_amount_enter_xpath"))).sendKeys(amount);
+		 Thread.sleep(2000);
+		 driver.findElement(By.xpath(prop.getProperty("save_order_xpath"))).click();
+		 Thread.sleep(2000);
+		 driver.findElement(By.xpath(prop.getProperty("order_view_xpath"))).click();
+		 
+	  }
+	
+	public static void logout() throws InterruptedException
+	{
+		WebElement ckHome = driver.findElement(By.xpath(prop.getProperty("ck_dropudown_xpath")));
+		System.out.println(ckHome.getText());
+		ckHome.click();
+		Thread.sleep(2000);
+		WebElement holdlogout = driver.findElement(By.xpath(prop.getProperty("hold_and_logout_xpath")));
+		System.out.println(holdlogout.getText());
+		holdlogout.click();
 	}
 
 	@Given("^Clcik on Submit button$")
@@ -179,7 +223,7 @@ public class LoginStepDef extends BrowserOpen {
 	public void enter_invalid_username_and_password() throws Throwable {
 
 		Map<String, String> testdatainmpa2 = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,
-				EnvironmentsData.FistSheet, EnvironmentsData.testcase2);
+				EnvironmentsData.FistSheet, "'"+scenario_name+"");
 		driver.findElement(By.xpath(prop.getProperty("Login_username_xpath"))).sendKeys(testdatainmpa2.get("Data_1"));
 		driver.findElement(By.xpath(prop.getProperty("Login_password_xpath"))).sendKeys(testdatainmpa2.get("Data_2"));
 		driver.findElement(By.xpath(prop.getProperty("Sign_up_xpath"))).click();

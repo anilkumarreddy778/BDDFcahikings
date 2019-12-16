@@ -32,7 +32,7 @@ public class BrowserOpen {
 	driver.get(EnvironmentsData.URL);
 	Thread.sleep(2000);
 	//driver.manage().window().maximize();
-	driver.manage().window().setSize(new Dimension(1900, 1080));
+	driver.manage().window().setSize(new Dimension(1600, 900));
 	
 	}
 }
