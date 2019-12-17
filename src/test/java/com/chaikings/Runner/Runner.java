@@ -17,7 +17,7 @@ import cucumber.api.junit.Cucumber;
 		plugin= {"pretty","json:target/cucumber-reports/cucumber.json"})
 
 public class Runner {
-	
+		
 }
 	//@RunWith(Cucumeber.class) - - @RunWith annotation tells Junit to run the class as Cucumber Test
 	//features - - Features keyword provides the location of the feature file.

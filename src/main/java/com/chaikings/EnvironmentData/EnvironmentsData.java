@@ -25,6 +25,7 @@ public class EnvironmentsData {
 	
 	public static final String Counter_start_URL = "http://steed26.biz/ck_beat/user/start";
 	public static final String Counter_update_end_URL = "http://steed26.biz/ck_beat/user/update_end";
+	public static final String POS_url = "http://steed26.biz/ck_beat/user/pos_view";
 	
 	
 	

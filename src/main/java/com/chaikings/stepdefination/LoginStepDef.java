@@ -1,6 +1,7 @@
 package com.chaikings.stepdefination;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -27,6 +28,7 @@ public class LoginStepDef extends BrowserOpen {
 
 	public static Properties prop;
 	static String scenario_name=null;
+	static Map<String, String> testdatainmpa;
 	
 
 	/*
@@ -47,7 +49,7 @@ public class LoginStepDef extends BrowserOpen {
 	@After
 	public void closeBrowser() throws InterruptedException {
 		Thread.sleep(3000);
-		System.out.println("Closing Browser");
+		System.out.println("@After Method : Driver Closed the Browser");
 		driver.close();
 	}
 
@@ -68,66 +70,90 @@ public class LoginStepDef extends BrowserOpen {
 	@Given("^enter username and password$")
 	public void enter_username_and_password() throws Throwable {
 
-		System.out.println(scenario_name);
-		Map<String, String> testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,
-				EnvironmentsData.FistSheet, "'"+scenario_name+"'");
+		System.out.println("Scenario Name : "+scenario_name);
+		 testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,EnvironmentsData.FistSheet, "'"+scenario_name+"'");
 		testdata.setTestDataInMap(testdatainmpa);// setter
 
 		Map<String, String> data = testdata.getTestDataInMap();//getter
+		
+		login();
+		if(driver.getCurrentUrl().equals(EnvironmentsData.URL))
+		{
+			forceLogin();
+			if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_update_end_URL))
+			{
+				counterUpdate();
+				
+			}else if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL))
+			{
+				counterStatrt();
+				orderPlaceing();
+				logout();
+				
+			}else if (driver.getCurrentUrl().equals(EnvironmentsData.POS_url))
+			{
+				orderPlaceing();
+				logout();
+			}
+		}else if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL))
+		{
+			counterStatrt();
+			orderPlaceing();
+			logout();
+			
+		}else if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_update_end_URL))
+		{
+			counterUpdate();
+		}else if (driver.getCurrentUrl().equals(EnvironmentsData.POS_url))
+		{
+			orderPlaceing();
+			logout();
+		}
+				
+	}
+	
+	
+	public static void login() throws InterruptedException 
+	{	
 		driver.findElement(By.xpath(prop.getProperty("Login_username_xpath"))).sendKeys(testdatainmpa.get("Data_1"));
 		Thread.sleep(3000);
 		driver.findElement(By.xpath(prop.getProperty("Login_password_xpath"))).sendKeys(testdatainmpa.get("Data_2"));
 		driver.findElement(By.xpath(prop.getProperty("Sign_up_xpath"))).click();
 		Thread.sleep(3000);
-
+	}
+	
+	public static void forceLogin() throws InterruptedException {
 		String dd = driver.getCurrentUrl();
-		
-		if (dd.equals(EnvironmentsData.URL)) {
+		if (dd.equals(EnvironmentsData.URL)) 
+			{
 			System.out.println("I am in force login screen....");
 			String forcelogintext = driver.findElement(By.xpath(prop.getProperty("force_login_xpath"))).getText();
 			System.out.println(forcelogintext);
 			WebElement clicktext = driver.findElement(By.xpath(prop.getProperty("force_login_linkTextclick_xpath")));
-			System.out.println(clicktext.getText());
 			clicktext.click();
 			orderPlaceing();
-		}
-			if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL)) {
-				System.out.println("Login succesfully.....");
-				System.out.println("i am Satrt screen.....");
-				System.out.println(driver.getCurrentUrl());
-				String open_cash_date = driver.findElement(By.xpath(prop.getProperty("opeing_cash_date_xpath")))
-						.getText();
-				System.out.println("Open counter data : " + open_cash_date);
-				String open_cash_amount = driver.findElement(By.xpath(prop.getProperty("opeing_cahs_xpath"))).getText();
-				System.out.println("open cash is : " + open_cash_amount);
-				driver.findElement(By.xpath(prop.getProperty("opeing_cash_statrt_button_xpath"))).click();
-				System.out.println("Succesfully POS Screen Displayed.");
-
-				orderPlaceing();
-				logout();
+			logout();
 			}
-
-//		  if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL)) {
-//			System.out.println("i am Satrt screen.....");
-//			System.out.println(driver.getCurrentUrl());
-//			String open_cash_date = driver.findElement(By.xpath(prop.getProperty("opeing_cash_date_xpath"))).getText();
-//			System.out.println("Open counter data : " + open_cash_date);
-//			String open_cash_amount = driver.findElement(By.xpath(prop.getProperty("opeing_cahs_xpath"))).getText();
-//			System.out.println("open cash is : " + open_cash_amount);
-//			System.out.println("Login succesfully.....");
-//			driver.findElement(By.xpath(prop.getProperty("opeing_cash_statrt_button_xpath"))).click();
-//			System.out.println("Succesfully POS Screen Displayed.");
-//
-//			WebElement ckHome = driver.findElement(By.xpath(prop.getProperty("ck_dropudown_xpath")));
-//			System.out.println(ckHome.getText());
-//			ckHome.click();
-//			Thread.sleep(2000);
-//			WebElement holdlogout = driver.findElement(By.xpath(prop.getProperty("hold_and_logout_xpath")));
-//			System.out.println(holdlogout.getText());
-//			holdlogout.click();
-//
-//		} 
-		  
+		}
+	
+	public static void counterStatrt() throws InterruptedException
+	{
+		if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL)) {
+			System.out.println("Login succesfully.....");
+			System.out.println("i am Satrt screen.....");
+			System.out.println(driver.getCurrentUrl());
+			String open_cash_date = driver.findElement(By.xpath(prop.getProperty("opeing_cash_date_xpath")))
+					.getText();
+			System.out.println("Open counter data : " + open_cash_date);
+			String open_cash_amount = driver.findElement(By.xpath(prop.getProperty("opeing_cahs_xpath"))).getText();
+			System.out.println("open cash is : " + open_cash_amount);
+			driver.findElement(By.xpath(prop.getProperty("opeing_cash_statrt_button_xpath"))).click();
+			System.out.println("Succesfully POS Screen Displayed.");
+		}
+	}
+	
+	
+	public static void counterUpdate() throws InterruptedException {  
 		  if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_update_end_URL)) {
 			System.out.println("i am in Day out update screen");
 			Thread.sleep(2000);
@@ -136,8 +162,7 @@ public class LoginStepDef extends BrowserOpen {
 			Thread.sleep(2000);
 			acutualCash.click();
 			Thread.sleep(3000);
-			driver.findElement(By.xpath(prop.getProperty("enter_closing_cash_xapth")))
-					.sendKeys(testdatainmpa.get("Data_8"));
+			driver.findElement(By.xpath(prop.getProperty("enter_closing_cash_xapth"))).sendKeys(testdatainmpa.get("Data_6"));
 			Thread.sleep(2000);
 			driver.findElement(By.xpath(prop.getProperty("update_button_xpath"))).click();
 			Thread.sleep(2000);
@@ -148,12 +173,33 @@ public class LoginStepDef extends BrowserOpen {
 			Alert alert = driver.switchTo().alert();
 			Thread.sleep(3000);
 			alert.accept();
-			//orderPlaceing();
+			Thread.sleep(2000);
+			driver.navigate().refresh();
+			driver.get(EnvironmentsData.URL);
+			login();
+			if (driver.getCurrentUrl().equals(EnvironmentsData.URL))
+			{
+				forceLogin();
+				counterStatrt();
+				orderPlaceing();
+				logout();
+			}else if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL))
+			{
+				counterStatrt();
+				Thread.sleep(3000);
+				orderPlaceing();
+				logout();
+				
+			}else if (driver.getCurrentUrl().equals(EnvironmentsData.POS_url))
+			{
+				orderPlaceing();
+				logout();
+			}
+			
 		}
-
-		  
-		  
-	}
+		}
+	
+	
 	
 	public static void orderPlaceing() throws InterruptedException
 	  {
@@ -180,19 +226,33 @@ public class LoginStepDef extends BrowserOpen {
 		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("save_order_xpath"))).click();
 		 Thread.sleep(2000);
+		 String ordernum = driver.findElement(By.xpath(prop.getProperty("order_number_xpath"))).getText();
+		System.out.println(ordernum+" : order got punched.");
+		 driver.findElement(By.xpath(prop.getProperty("print_later_xpath"))).click();
+		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("order_view_xpath"))).click();
+		 List<WebElement> listofOrder = driver.findElements(By.xpath(prop.getProperty("order_number_list_xpath")));
+		 for (int i=0;i<listofOrder.size();i++)
+		 {
+			 listofOrder.get(i);
+			 System.out.println(listofOrder.get(i).getText());
+			 if(ordernum.equals(listofOrder.get(i).getText()))
+			 {
+				 System.out.println(" : Order got succsfully placed and Displaying in Order View page..");
+			 }
+		 }
 		 
 	  }
 	
 	public static void logout() throws InterruptedException
 	{
-		WebElement ckHome = driver.findElement(By.xpath(prop.getProperty("ck_dropudown_xpath")));
-		System.out.println(ckHome.getText());
-		ckHome.click();
+		driver.findElement(By.xpath(prop.getProperty("ck_dropudown_xpath"))).click();
 		Thread.sleep(2000);
 		WebElement holdlogout = driver.findElement(By.xpath(prop.getProperty("hold_and_logout_xpath")));
-		System.out.println(holdlogout.getText());
+		Thread.sleep(2000);
+		System.out.println("User click on - "+holdlogout.getText());
 		holdlogout.click();
+		
 	}
 
 	@Given("^Clcik on Submit button$")

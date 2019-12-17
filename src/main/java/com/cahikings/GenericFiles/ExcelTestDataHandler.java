@@ -24,7 +24,7 @@ public class ExcelTestDataHandler {
 			conn=filo.getConnection(testdataFilename);
 			recordset=conn.executeQuery(query);
 			
-			System.out.println(recordset.getCount()+ " TestCase are there.");
+			System.out.println(recordset.getCount()+ " TestCase are there - from ExcelTestData class.");
 			
 			while(recordset.next())
 			{
