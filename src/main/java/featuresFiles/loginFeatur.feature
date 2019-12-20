@@ -1,5 +1,5 @@
 @Login_feature
-Feature: Test User Login Functionality Screen 
+Feature: Test User Login Functionality Screen
 
 @test1
 Scenario: login_with_correct_credentials
@@ -25,7 +25,7 @@ Scenario: login_and_place_an_order
 Given counter will login to chaikings site
 Then user will add some items to cart
 Then counter will click on conform order
-And order should be confrimed 
+And order should be confrimed
 
 @test4
 Scenario: login_as_manager_and_check_manager_able_to_login_or_not

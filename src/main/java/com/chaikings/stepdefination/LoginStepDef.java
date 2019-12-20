@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -20,7 +21,6 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import gherkin.ast.Feature;
 
 public class LoginStepDef extends BrowserOpen {
 
@@ -203,33 +203,23 @@ public class LoginStepDef extends BrowserOpen {
 	
 	public static void orderPlaceing() throws InterruptedException
 	  {
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		Map<String, String> data = testdata.getTestDataInMap();
 		
 		 driver.findElement(By.xpath(prop.getProperty("Black_chai_product_xpath"))).click();
-		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("honey_add_product_xpath"))).click();
-		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("category_search_xpath"))).sendKeys(data.get("Data_7"));
-		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("maggi_product_xpath"))).click();
-		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("maggi_add_xpath"))).click();
-		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("quntity_increase_xpath"))).click();
-		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("cash_order_xpath"))).click();
-		 Thread.sleep(3000);
 		 driver.findElement(By.xpath(prop.getProperty("order_confirm_xpath"))).click();		 
-		 Thread.sleep(2000);
 		 String amount =driver.findElement(By.xpath(prop.getProperty("cash_order_amount_xpath"))).getText();
 		 driver.findElement(By.xpath(prop.getProperty("cash_amount_enter_xpath"))).sendKeys(amount);
-		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("save_order_xpath"))).click();
-		 Thread.sleep(2000);
 		 String ordernum = driver.findElement(By.xpath(prop.getProperty("order_number_xpath"))).getText();
 		System.out.println(ordernum+" : order got punched.");
 		 driver.findElement(By.xpath(prop.getProperty("print_later_xpath"))).click();
-		 Thread.sleep(2000);
 		 driver.findElement(By.xpath(prop.getProperty("order_view_xpath"))).click();
 		 List<WebElement> listofOrder = driver.findElements(By.xpath(prop.getProperty("order_number_list_xpath")));
 		 for (int i=0;i<listofOrder.size();i++)
@@ -283,7 +273,7 @@ public class LoginStepDef extends BrowserOpen {
 	public void enter_invalid_username_and_password() throws Throwable {
 
 		Map<String, String> testdatainmpa2 = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,
-				EnvironmentsData.FistSheet, "'"+scenario_name+"");
+				EnvironmentsData.FistSheet, "'"+scenario_name+"'");
 		driver.findElement(By.xpath(prop.getProperty("Login_username_xpath"))).sendKeys(testdatainmpa2.get("Data_1"));
 		driver.findElement(By.xpath(prop.getProperty("Login_password_xpath"))).sendKeys(testdatainmpa2.get("Data_2"));
 		driver.findElement(By.xpath(prop.getProperty("Sign_up_xpath"))).click();
@@ -291,9 +281,9 @@ public class LoginStepDef extends BrowserOpen {
 		Boolean trurr = driver.findElement(By.xpath(prop.getProperty("invalid_user_name_password_xpath")))
 				.isDisplayed();
 		if (trurr == true) {
-			System.out.println("Proper Error message Displyed.");
+			System.out.print("Proper Error message Displyed.");
 		} else {
-			System.out.println("Error message not Displayed.");
+			System.out.print("Error message not Displayed.");
 		}
 
 	}
