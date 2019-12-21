@@ -13,7 +13,6 @@ import org.openqa.selenium.WebElement;
 import com.cahikings.GenericFiles.BrowserOpen;
 import com.cahikings.GenericFiles.ExcelDataHandlerGetterSetter;
 import com.cahikings.GenericFiles.ExcelTestDataHandler;
-import com.cahikings.GenericFiles.ReadingProepertyXpath;
 import com.chaikings.EnvironmentData.EnvironmentsData;
 
 import cucumber.api.Scenario;
@@ -24,26 +23,32 @@ import cucumber.api.java.en.Then;
 
 public class LoginStepDef extends BrowserOpen {
 
-	static ExcelDataHandlerGetterSetter testdata = new ExcelDataHandlerGetterSetter();
-
 	public static Properties prop;
-	static String scenario_name=null;
+	static String scenario_name;
 	static Map<String, String> testdatainmpa;
+	public static Map<String, String> data;
 	
+	static ExcelDataHandlerGetterSetter testdata = new ExcelDataHandlerGetterSetter(); // to store in getters and setters
+	
+	
+	
+	public LoginStepDef() throws IOException {
+		super();
+	}
 
-	/*
-	 * // public LoginStepDef() throws IOException { // // prop =new Properties();
-	 * // FileInputStream fis=new FileInputStream(EnvironmentsData.Xpath_property);
-	 * // prop.load(fis); // }
-	 * 
-	 * // ReadingProepertyXpath.readxpathdata(EnvironmentsData.Xpath_property);
-	 */
 
 	@Before
-	public void openBrowser(Scenario scenario) throws InterruptedException, IOException {
+	public void openBrowser(Scenario scenario) throws Exception {
+		
 		BrowserOpen.initialization();
-		prop = ReadingProepertyXpath.readxpathdata(EnvironmentsData.Xpath_property);
 		scenario_name=scenario.getName();
+		
+		System.out.println("Scenario Name : "+scenario_name);
+		testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,EnvironmentsData.FistSheet, "'"+scenario_name+"'");
+		testdata.setTestDataInMap(testdatainmpa);// setter
+		
+		
+		data = testdata.getTestDataInMap();//getter
 	}
 
 	@After
@@ -74,7 +79,7 @@ public class LoginStepDef extends BrowserOpen {
 		 testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,EnvironmentsData.FistSheet, "'"+scenario_name+"'");
 		testdata.setTestDataInMap(testdatainmpa);// setter
 
-		Map<String, String> data = testdata.getTestDataInMap();//getter
+		data = testdata.getTestDataInMap();//getter
 		
 		login();
 		if(driver.getCurrentUrl().equals(EnvironmentsData.URL))
@@ -87,18 +92,15 @@ public class LoginStepDef extends BrowserOpen {
 			}else if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL))
 			{
 				counterStatrt();
-				orderPlaceing();
 				logout();
 				
 			}else if (driver.getCurrentUrl().equals(EnvironmentsData.POS_url))
 			{
-				orderPlaceing();
 				logout();
 			}
 		}else if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL))
 		{
 			counterStatrt();
-			orderPlaceing();
 			logout();
 			
 		}else if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_update_end_URL))
@@ -106,7 +108,6 @@ public class LoginStepDef extends BrowserOpen {
 			counterUpdate();
 		}else if (driver.getCurrentUrl().equals(EnvironmentsData.POS_url))
 		{
-			orderPlaceing();
 			logout();
 		}
 				
@@ -131,7 +132,6 @@ public class LoginStepDef extends BrowserOpen {
 			System.out.println(forcelogintext);
 			WebElement clicktext = driver.findElement(By.xpath(prop.getProperty("force_login_linkTextclick_xpath")));
 			clicktext.click();
-			orderPlaceing();
 			logout();
 			}
 		}
@@ -181,18 +181,16 @@ public class LoginStepDef extends BrowserOpen {
 			{
 				forceLogin();
 				counterStatrt();
-				orderPlaceing();
 				logout();
 			}else if (driver.getCurrentUrl().equals(EnvironmentsData.Counter_start_URL))
 			{
 				counterStatrt();
 				Thread.sleep(3000);
-				orderPlaceing();
 				logout();
 				
 			}else if (driver.getCurrentUrl().equals(EnvironmentsData.POS_url))
 			{
-				orderPlaceing();
+				
 				logout();
 			}
 			
@@ -201,38 +199,7 @@ public class LoginStepDef extends BrowserOpen {
 	
 	
 	
-	public static void orderPlaceing() throws InterruptedException
-	  {
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		Map<String, String> data = testdata.getTestDataInMap();
-		
-		 driver.findElement(By.xpath(prop.getProperty("Black_chai_product_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("honey_add_product_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("category_search_xpath"))).sendKeys(data.get("Data_7"));
-		 driver.findElement(By.xpath(prop.getProperty("maggi_product_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("maggi_add_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("quntity_increase_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("cash_order_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("order_confirm_xpath"))).click();		 
-		 String amount =driver.findElement(By.xpath(prop.getProperty("cash_order_amount_xpath"))).getText();
-		 driver.findElement(By.xpath(prop.getProperty("cash_amount_enter_xpath"))).sendKeys(amount);
-		 driver.findElement(By.xpath(prop.getProperty("save_order_xpath"))).click();
-		 String ordernum = driver.findElement(By.xpath(prop.getProperty("order_number_xpath"))).getText();
-		System.out.println(ordernum+" : order got punched.");
-		 driver.findElement(By.xpath(prop.getProperty("print_later_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("order_view_xpath"))).click();
-		 List<WebElement> listofOrder = driver.findElements(By.xpath(prop.getProperty("order_number_list_xpath")));
-		 for (int i=0;i<listofOrder.size();i++)
-		 {
-			 listofOrder.get(i);
-			 System.out.println(listofOrder.get(i).getText());
-			 if(ordernum.equals(listofOrder.get(i).getText()))
-			 {
-				 System.out.println(" : Order got succsfully placed and Displaying in Order View page..");
-			 }
-		 }
-		 
-	  }
+
 	
 	public static void logout() throws InterruptedException
 	{
