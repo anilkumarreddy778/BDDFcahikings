@@ -129,7 +129,7 @@ public class PosOrderPlacingSD extends BrowserOpen {
 	@Then("^check in cart added items should display$")
 	public void check_in_cart_added_items_should_display() {
 		List<WebElement> productNames= driver.findElements(By.xpath(prop.getProperty("cart_productName_xpath")));
-		 for(int i=0; i<=productNames.size();i++)
+		 for(int i=0; i<productNames.size();i++)
 		 {
 			 System.out.println("Total products is "+productNames.size());
 			 System.out.println(productNames.get(i).getText());
