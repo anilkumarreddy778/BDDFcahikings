@@ -113,25 +113,33 @@ public class PosOrderPlacingSD extends BrowserOpen {
 	}
 
 	@Then("^add some items to cart$")
-	public void add_some_items_to_cart() {
+	public void add_some_items_to_cart() throws InterruptedException {
 		
 		 WebElement blackchai= driver.findElement(By.xpath(prop.getProperty("Black_chai_product_xpath")));
 		 clickOn(driver,blackchai,5);
-		 driver.findElement(By.xpath(prop.getProperty("honey_add_product_xpath"))).click();
+		 WebElement honeyadd = driver.findElement(By.xpath(prop.getProperty("honey_add_product_xpath")));
+		 clickOn(driver,honeyadd,5);
 		 WebElement categorysearch=driver.findElement(By.xpath(prop.getProperty("category_search_xpath")));
-		 sendKeys(driver,categorysearch,5,data.get("Data_y"));
-		 driver.findElement(By.xpath(prop.getProperty("maggi_product_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("maggi_add_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("quntity_increase_xpath"))).click();
+		 sendKeys(driver,categorysearch,5,data.get("Data_4"));
+		 driver.navigate().refresh();
+		 WebElement maggiproduct=driver.findElement(By.xpath(prop.getProperty("maggi_product_xpath")));
+		 Thread.sleep(3000);
+		 clickOn(driver,maggiproduct,5);
+		 WebElement maggiadd=driver.findElement(By.xpath(prop.getProperty("maggi_add_xpath")));
+		 clickOn(driver,maggiadd,5); 
+		 WebElement quntityup=driver.findElement(By.xpath(prop.getProperty("quntity_increase_xpath"))); 
+		 clickOn(driver,quntityup,5);
+		
+		 
 		 
 	}
 
 	@Then("^check in cart added items should display$")
 	public void check_in_cart_added_items_should_display() {
 		List<WebElement> productNames= driver.findElements(By.xpath(prop.getProperty("cart_productName_xpath")));
+		 System.out.println("Total products is "+productNames.size());
 		 for(int i=0; i<productNames.size();i++)
 		 {
-			 System.out.println("Total products is "+productNames.size());
 			 System.out.println(productNames.get(i).getText());
 			 
 		 }
@@ -140,25 +148,31 @@ public class PosOrderPlacingSD extends BrowserOpen {
 	@Then("^place order as cash order$")
 	public void place_order_as_cash_order() {
 	  
-		driver.findElement(By.xpath(prop.getProperty("cash_order_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("order_confirm_xpath"))).click();		 
-		 String amount =driver.findElement(By.xpath(prop.getProperty("cash_order_amount_xpath"))).getText();
-		 driver.findElement(By.xpath(prop.getProperty("cash_amount_enter_xpath"))).sendKeys(amount);
-		 driver.findElement(By.xpath(prop.getProperty("save_order_xpath"))).click();
-		 
-		 String ordernum = driver.findElement(By.xpath(prop.getProperty("order_number_xpath"))).getText();
-		System.out.println(ordernum+" : order got punched.");
-		 driver.findElement(By.xpath(prop.getProperty("print_later_xpath"))).click();
-		 driver.findElement(By.xpath(prop.getProperty("order_view_xpath"))).click();
-		 List<WebElement> listofOrder = driver.findElements(By.xpath(prop.getProperty("order_number_list_xpath")));
+		WebElement cashorder = driver.findElement(By.xpath(prop.getProperty("cash_order_xpath")));
+		clickOn(driver, cashorder, 6);
+		WebElement orderconfirm = driver.findElement(By.xpath(prop.getProperty("order_confirm_xpath")));
+		clickOn(driver, orderconfirm, 5);
+		String amount = driver.findElement(By.xpath(prop.getProperty("cash_order_amount_xpath"))).getText();
+		WebElement cahsamount = driver.findElement(By.xpath(prop.getProperty("cash_amount_enter_xpath")));
+		sendKeys(driver, cahsamount, 6, amount);
+		WebElement saveorder = driver.findElement(By.xpath(prop.getProperty("save_order_xpath")));
+		clickOn(driver, saveorder, 5);
+		String ordernum = driver.findElement(By.xpath(prop.getProperty("order_number_xpath"))).getText();
+		System.out.println(ordernum + " : order got punched.");
+		WebElement printlater=driver.findElement(By.xpath(prop.getProperty("print_later_xpath")));
+		clickOn(driver,printlater,5);		
+		WebElement orderview=driver.findElement(By.xpath(prop.getProperty("order_view_xpath")));
+		clickOn(driver,orderview,5);
+		List<WebElement> listofOrder = driver.findElements(By.xpath(prop.getProperty("order_number_list_xpath")));
 		 for (int i=0;i<listofOrder.size();i++)
 		 {
 			 listofOrder.get(i);
-			 System.out.println(listofOrder.get(i).getText());
+			
 			 if(ordernum.equals(listofOrder.get(i).getText()))
 			 {
-				 System.out.println(" : Order got succsfully placed and Displaying in Order View page..");
+				 System.out.println(ordernum+" : Order got succsfully placed and Displaying in Order View page..");
 			 }
+			 System.out.println(listofOrder.get(i).getText());
 		 }
 	}
 
@@ -299,7 +313,12 @@ public class PosOrderPlacingSD extends BrowserOpen {
 		 String amount =driver.findElement(By.xpath(prop.getProperty("cash_order_amount_xpath"))).getText();
 		 driver.findElement(By.xpath(prop.getProperty("cash_amount_enter_xpath"))).sendKeys(amount);
 		 driver.findElement(By.xpath(prop.getProperty("save_order_xpath"))).click();
-		 String ordernum = driver.findElement(By.xpath(prop.getProperty("order_number_xpath"))).getText();
+		 WebElement ordernumele = driver.findElement(By.xpath(prop.getProperty("order_number_xpath")));
+		 Thread.sleep(3000);
+		 boolean dd=ordernumele.isDisplayed();
+		 System.out.println(dd+"ghjgjhjh");
+		 					String ordernum=ordernumele.getText();
+		 Thread.sleep(3000);
 		System.out.println(ordernum+" : order got punched.");
 		 driver.findElement(By.xpath(prop.getProperty("print_later_xpath"))).click();
 		 driver.findElement(By.xpath(prop.getProperty("order_view_xpath"))).click();

@@ -52,7 +52,7 @@ public class BrowserOpen {
 	driver.get(EnvironmentsData.URL);
 	Thread.sleep(2000);
 	//driver.manage().window().maximize();
-	driver.manage().window().setSize(new Dimension(1550, 850));
+	driver.manage().window().setSize(new Dimension(1600, 880));
 	driver.manage().deleteAllCookies();
 	driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

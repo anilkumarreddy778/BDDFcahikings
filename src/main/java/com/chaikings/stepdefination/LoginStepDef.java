@@ -23,7 +23,7 @@ import cucumber.api.java.en.Then;
 
 public class LoginStepDef extends BrowserOpen {
 
-	public static Properties prop;
+	
 	static String scenario_name;
 	static Map<String, String> testdatainmpa;
 	public static Map<String, String> data;
@@ -46,9 +46,8 @@ public class LoginStepDef extends BrowserOpen {
 		System.out.println("Scenario Name : "+scenario_name);
 		testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,EnvironmentsData.FistSheet, "'"+scenario_name+"'");
 		testdata.setTestDataInMap(testdatainmpa);// setter
-		
-		
 		data = testdata.getTestDataInMap();//getter
+	
 	}
 
 	@After
@@ -76,10 +75,10 @@ public class LoginStepDef extends BrowserOpen {
 	public void enter_username_and_password() throws Throwable {
 
 		System.out.println("Scenario Name : "+scenario_name);
-		 testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,EnvironmentsData.FistSheet, "'"+scenario_name+"'");
-		testdata.setTestDataInMap(testdatainmpa);// setter
-
-		data = testdata.getTestDataInMap();//getter
+//		 testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,EnvironmentsData.FistSheet, "'"+scenario_name+"'");
+//		testdata.setTestDataInMap(testdatainmpa);// setter
+//
+//		data = testdata.getTestDataInMap();//getter
 		
 		login();
 		if(driver.getCurrentUrl().equals(EnvironmentsData.URL))
@@ -116,11 +115,16 @@ public class LoginStepDef extends BrowserOpen {
 	
 	public static void login() throws InterruptedException 
 	{	
+		try{
 		driver.findElement(By.xpath(prop.getProperty("Login_username_xpath"))).sendKeys(testdatainmpa.get("Data_1"));
 		Thread.sleep(3000);
 		driver.findElement(By.xpath(prop.getProperty("Login_password_xpath"))).sendKeys(testdatainmpa.get("Data_2"));
 		driver.findElement(By.xpath(prop.getProperty("Sign_up_xpath"))).click();
 		Thread.sleep(3000);
+		}catch (Exception e)
+		{
+			System.out.println("nullpointer");
+		}
 	}
 	
 	public static void forceLogin() throws InterruptedException {
@@ -239,10 +243,10 @@ public class LoginStepDef extends BrowserOpen {
 	@Given("^enter invalid username and password$")
 	public void enter_invalid_username_and_password() throws Throwable {
 
-		Map<String, String> testdatainmpa2 = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,
-				EnvironmentsData.FistSheet, "'"+scenario_name+"'");
-		driver.findElement(By.xpath(prop.getProperty("Login_username_xpath"))).sendKeys(testdatainmpa2.get("Data_1"));
-		driver.findElement(By.xpath(prop.getProperty("Login_password_xpath"))).sendKeys(testdatainmpa2.get("Data_2"));
+//		Map<String, String> testdatainmpa2 = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,
+//				EnvironmentsData.FistSheet, "'"+scenario_name+"'");
+		driver.findElement(By.xpath(prop.getProperty("Login_username_xpath"))).sendKeys(testdatainmpa.get("Data_1"));
+		driver.findElement(By.xpath(prop.getProperty("Login_password_xpath"))).sendKeys(testdatainmpa.get("Data_2"));
 		driver.findElement(By.xpath(prop.getProperty("Sign_up_xpath"))).click();
 
 		Boolean trurr = driver.findElement(By.xpath(prop.getProperty("invalid_user_name_password_xpath")))
