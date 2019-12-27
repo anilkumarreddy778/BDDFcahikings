@@ -19,6 +19,10 @@ import cucumber.api.junit.Cucumber;
 public class Runner {
 		
 }
+
+
+//ctrl + shift + o - to import
+//ctrl + shift + R - for open resource
 	
 
  	//@RunWith(Cucumeber.class) - - @RunWith annotation tells Junit to run the class as Cucumber Test
