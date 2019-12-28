@@ -47,11 +47,10 @@ public class LoginStepDef extends BrowserOpen {
 		testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,EnvironmentsData.FistSheet, "'"+scenario_name+"'");
 		testdata.setTestDataInMap(testdatainmpa);// setter
 		data = testdata.getTestDataInMap();//getter
-	
 	}
 
 	@After
-	public void closeBrowser() throws InterruptedException {
+	public void closeBrowser() throws InterruptedException                                                                                                                                                        {
 		Thread.sleep(3000);
 		System.out.println("@After Method : Driver Closed the Browser");
 		driver.close();

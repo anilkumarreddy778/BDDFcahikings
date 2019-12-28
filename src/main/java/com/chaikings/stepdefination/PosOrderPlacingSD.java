@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -121,7 +122,8 @@ public class PosOrderPlacingSD extends BrowserOpen {
 		 clickOn(driver,honeyadd,5);
 		 WebElement categorysearch=driver.findElement(By.xpath(prop.getProperty("category_search_xpath")));
 		 sendKeys(driver,categorysearch,5,data.get("Data_4"));
-		 driver.navigate().refresh();
+		 categorysearch.sendKeys(Keys.ENTER);
+		 //driver.navigate().refresh();
 		 WebElement maggiproduct=driver.findElement(By.xpath(prop.getProperty("maggi_product_xpath")));
 		 Thread.sleep(3000);
 		 clickOn(driver,maggiproduct,5);
