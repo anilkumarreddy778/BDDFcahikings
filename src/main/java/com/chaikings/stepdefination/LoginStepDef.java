@@ -1,10 +1,8 @@
 package com.chaikings.stepdefination;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
+
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -50,7 +48,7 @@ public class LoginStepDef extends BrowserOpen {
 	}
 
 	@After
-	public void closeBrowser() throws InterruptedException                                                                                                                                                        {
+	public void closeBrowser() throws InterruptedException, IOException {
 		Thread.sleep(3000);
 		System.out.println("@After Method : Driver Closed the Browser");
 		driver.close();
