@@ -48,10 +48,12 @@ public class LoginStepDef extends BrowserOpen {
 	}
 
 	@After
-	public void closeBrowser() throws InterruptedException, IOException {
-		Thread.sleep(3000);
-		System.out.println("@After Method : Driver Closed the Browser");
-		driver.close();
+	public void closeBrowser(Scenario scenario) throws InterruptedException, IOException {
+//		Thread.sleep(3000);
+//		System.out.println("@After Method : Driver Closed the Browser");
+//		driver.close();
+		
+		tearDown(scenario);
 	}
 
 	// 1nd scenario

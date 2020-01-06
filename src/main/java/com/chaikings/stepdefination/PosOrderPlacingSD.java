@@ -14,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.aventstack.extentreports.ExtentTest;
 import com.cahikings.GenericFiles.BrowserOpen;
 import com.cahikings.GenericFiles.ExcelDataHandlerGetterSetter;
 import com.chaikings.EnvironmentData.EnvironmentsData;
@@ -41,6 +42,9 @@ public class PosOrderPlacingSD extends BrowserOpen {
 		data=testdatad.getTestDataInMap();
 		
 		System.out.println("1st step");
+		
+		ExtentTest test=null;
+		test.pass("Opened chrome browser and entered urldsfsfsfsfsdfs");
 	   
 	}
 
