@@ -14,7 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.aventstack.extentreports.ExtentTest;
+
 import com.cahikings.GenericFiles.BrowserOpen;
 import com.cahikings.GenericFiles.ExcelDataHandlerGetterSetter;
 import com.chaikings.EnvironmentData.EnvironmentsData;
@@ -42,9 +42,6 @@ public class PosOrderPlacingSD extends BrowserOpen {
 		data=testdatad.getTestDataInMap();
 		
 		System.out.println("1st step");
-		
-		ExtentTest test=null;
-		test.pass("Opened chrome browser and entered urldsfsfsfsfsdfs");
 	   
 	}
 
@@ -129,14 +126,11 @@ public class PosOrderPlacingSD extends BrowserOpen {
 		 //driver.navigate().refresh();
 		 WebElement maggiproduct=driver.findElement(By.xpath(prop.getProperty("maggi_product_xpath")));
 		 Thread.sleep(3000);
-		 clickOn(driver,maggiproduct,5);
+		 clickOn(driver,maggiproduct,50);
 		 WebElement maggiadd=driver.findElement(By.xpath(prop.getProperty("maggi_add_xpath")));
-		 clickOn(driver,maggiadd,5); 
+		 clickOn(driver,maggiadd,50); 
 		 WebElement quntityup=driver.findElement(By.xpath(prop.getProperty("quntity_increase_xpath"))); 
-		 clickOn(driver,quntityup,5);
-		
-		 
-		 
+		 clickOn(driver,quntityup,50);		 
 	}
 
 	@Then("^check in cart added items should display$")
