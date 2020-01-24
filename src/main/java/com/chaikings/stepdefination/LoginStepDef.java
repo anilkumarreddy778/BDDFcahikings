@@ -1,12 +1,17 @@
 package com.chaikings.stepdefination;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Map;
 
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.cahikings.GenericFiles.BrowserOpen;
 import com.cahikings.GenericFiles.ExcelDataHandlerGetterSetter;
@@ -35,32 +40,33 @@ public class LoginStepDef extends BrowserOpen {
 	}
 
 
-	@Before
-	public void openBrowser(Scenario scenario) throws Exception {
-		
-		BrowserOpen.initialization();
-		scenario_name=scenario.getName();
-		
-		System.out.println("Scenario Name : "+scenario_name);
-		testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,EnvironmentsData.FistSheet, "'"+scenario_name+"'");
-		testdata.setTestDataInMap(testdatainmpa);// setter
-		data = testdata.getTestDataInMap();//getter
-	}
+//	@Before
+//	public void openBrowser(Scenario scenario) throws Exception {
+//		
+//		BrowserOpen.initialization();
+//		scenario_name=scenario.getName();
+//		
+//		System.out.println("Scenario Name : "+scenario_name);
+//		testdatainmpa = ExcelTestDataHandler.getTestDataInMap(EnvironmentsData.testdata_sheet,EnvironmentsData.FistSheet, "'"+scenario_name+"'");
+//		testdata.setTestDataInMap(testdatainmpa);// setter
+//		data = testdata.getTestDataInMap();//getter
+//	}
 
-	@After
-	public void closeBrowser(Scenario scenario) throws InterruptedException, IOException {
-//		Thread.sleep(3000);
-//		System.out.println("@After Method : Driver Closed the Browser");
-//		driver.close();
-		
-		tearDown(scenario);
-	}
+//	@After
+//	public void closeBrowser(Scenario scenario) throws InterruptedException, IOException {
+////		Thread.sleep(3000);
+////		System.out.println("@After Method : Driver Closed the Browser");
+////		driver.close();
+//		
+//		tearDown(scenario);
+//	}
 
 	// 1nd scenario
 	@Given("^User is already on chaiking login page$")
 	public void user_is_already_on_chaiking_login_page() throws Throwable {
 	
 		System.out.println("Browser got open succesfuly..");
+
 	}
 
 	@Then("^verify the title of login page is chaikings$")
@@ -261,6 +267,8 @@ public class LoginStepDef extends BrowserOpen {
 	@Then("^verify proper error messge should Display$")
 	public void verify_proper_error_messge_should_Display() throws Throwable {
 
+		
+	
 	}
 
 	// 3rd scenario

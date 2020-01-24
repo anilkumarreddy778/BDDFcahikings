@@ -16,3 +16,9 @@ And then go to billing screen
 Then place order should display
 And clcik on bill and take screenshot
 Then logout from POS Screen
+
+
+@test6
+Scenario: database_testing
+
+Given database username and password

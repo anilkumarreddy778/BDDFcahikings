@@ -13,7 +13,7 @@ import cucumber.api.junit.Cucumber;
 		glue= {"com.chaikings.stepdefination"},
 		dryRun=false,
 		monochrome=true,
-		tags= {"@test5"},
+		tags= {"@test6"},
 		plugin= {"pretty","json:target/cucumber-reports/cucumber.json"})
 
 public class Runner {
@@ -21,8 +21,8 @@ public class Runner {
 }
 
 
-//ctrl + shift + o - to import
-//ctrl + shift + R - for open resource
+	//ctrl + shift + o - to import
+	//ctrl + shift + R - for open resource
 	
 
  	//@RunWith(Cucumeber.class) - - @RunWith annotation tells Junit to run the class as Cucumber Test
@@ -34,7 +34,7 @@ public class Runner {
 	//interlink between feature files and step definition classes. 
 	//It is in test runner class, that you provide the path for both feature file and step defs class
 	//There are multiple types of test runners such as JUnit runner, CLI runner, Android runner etc, that you can use to run Cucumber feature file. In this article, we will be using the JUnit runner
-
+ 
 	//STEP DEFINATION  (Step defs) 
 	//Cucumber step definition class is a normal java class where you can store step definition methods.
 	//And a step definition method is a java method that is linked to a step in the scenario in feature file.

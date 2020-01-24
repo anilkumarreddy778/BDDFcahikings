@@ -2,6 +2,11 @@ package com.chaikings.stepdefination;
 
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
@@ -196,6 +201,32 @@ public class PosOrderPlacingSD extends BrowserOpen {
 	   
 	}
 	
+	
+	
+	@Given("^database username and password$")
+	public void database_username_and_password() throws ClassNotFoundException, SQLException {
+		
+	Class.forName("com.mysql.jdbc.Driver");
+		
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/myfram","root","password");
+		
+		Statement stm=con.createStatement();
+			
+		ResultSet rs=stm.executeQuery("select * from frm_members  limit 2");
+		//System.out.println(rs.);
+		
+		int num=0;
+		
+		while(rs.next())
+		{
+			num++;
+			String firstname=rs.getString("mem_id");
+			System.out.print(firstname);
+			String email=rs.getString("mem_name");
+			System.out.println(" - "+email);
+		}
+		System.out.println(num+" total records");
+	}
 	
 	
 	
