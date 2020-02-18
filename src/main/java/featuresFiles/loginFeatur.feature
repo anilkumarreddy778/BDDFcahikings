@@ -1,5 +1,15 @@
 @Login_feature
 Feature: Test User Login Functionality Screen
+As a customer
+In order to use the application
+I want to login with email and password
+
+#Scenario: Logging in with valid credentials
+# Given I am at the Account/Login page
+#  When I fill the account email textbox with value 'myname@mymail.com'
+#   And I fill the password textbox with value 'mypassword'
+#   And I click the login button
+#  Then I should be at the home page
 
 @test1
 Scenario: login_with_correct_credentials
@@ -18,6 +28,7 @@ Given User is on chaiking login page
 Then Verify the title of login page should chaikings
 Given enter invalid username and password
 Then verify proper error messge should Display
+
 
 @test3
 Scenario: login_and_place_an_order

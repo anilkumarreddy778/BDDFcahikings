@@ -15,5 +15,5 @@ public class ExcelDataHandlerGetterSetter {
 		this.testDataInMap = testDataInMap;
 	}
 	
-
+// map is a interface - it has concreat methods = 
 }

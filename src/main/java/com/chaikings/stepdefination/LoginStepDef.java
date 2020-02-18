@@ -6,12 +6,16 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
-
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cahikings.GenericFiles.BrowserOpen;
 import com.cahikings.GenericFiles.ExcelDataHandlerGetterSetter;
@@ -171,7 +175,12 @@ public class LoginStepDef extends BrowserOpen {
 			Thread.sleep(2000);
 			acutualCash.click();
 			Thread.sleep(3000);
-			driver.findElement(By.xpath(prop.getProperty("enter_closing_cash_xapth"))).sendKeys(testdatainmpa.get("Data_6"));
+			WebDriverWait wait = new WebDriverWait(driver,10);
+		
+			WebElement ele2=driver.findElement(By.xpath(prop.getProperty("enter_closing_cash_xapth")));
+			wait.until(ExpectedConditions.visibilityOf(ele2));
+			ele2.sendKeys(testdatainmpa.get("Data_6"));
+			driver.navigate().forward();
 			Thread.sleep(2000);
 			driver.findElement(By.xpath(prop.getProperty("update_button_xpath"))).click();
 			Thread.sleep(2000);
@@ -199,10 +208,8 @@ public class LoginStepDef extends BrowserOpen {
 				
 			}else if (driver.getCurrentUrl().equals(EnvironmentsData.POS_url))
 			{
-				
 				logout();
 			}
-			
 		}
 		}
 	
@@ -218,6 +225,7 @@ public class LoginStepDef extends BrowserOpen {
 		Thread.sleep(2000);
 		System.out.println("User click on - "+holdlogout.getText());
 		holdlogout.click();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 	}
 
@@ -266,8 +274,6 @@ public class LoginStepDef extends BrowserOpen {
 
 	@Then("^verify proper error messge should Display$")
 	public void verify_proper_error_messge_should_Display() throws Throwable {
-
-		
 	
 	}
 
@@ -283,9 +289,10 @@ public class LoginStepDef extends BrowserOpen {
 
 	}
 
+	
 	@Then("^counter will click on conform order$")
 	public void counter_will_click_on_conform_order() throws Throwable {
-
+		
 	}
 
 	@Then("^order should be confrimed$")
@@ -301,7 +308,9 @@ public class LoginStepDef extends BrowserOpen {
 
 	@Then("^enter manger username and password and click on submit button$")
 	public void enter_manger_username_and_password_and_click_on_submit_button() {
-
+		
+		System.out.println("nothing implemented...");
+	
 	}
 
 	@Then("^check weather succesfully logined or not$")
