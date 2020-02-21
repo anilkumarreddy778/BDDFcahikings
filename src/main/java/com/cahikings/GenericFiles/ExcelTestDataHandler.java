@@ -1,16 +1,18 @@
 package com.cahikings.GenericFiles;
 
 
+import java.io.FileInputStream;
 import java.util.Map;
 import java.util.TreeMap;
 
-
-
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.codoid.products.exception.FilloException;
 import com.codoid.products.fillo.Connection;
 import com.codoid.products.fillo.Fillo;
 import com.codoid.products.fillo.Recordset;
+import com.google.common.collect.Table.Cell;
 
 
 
@@ -49,25 +51,25 @@ public class ExcelTestDataHandler {
 		return testDataInMap;
 		
 	}
+
+
+
+
+
+public static String getcellvalue(String path,String sheet,int row,int cell)
+{
+	String value=" ";
+try {
+	FileInputStream fil=new FileInputStream(path);	
+Workbook wb = WorkbookFactory.create(fil);
+//Cell c=wb.getSheet(sheet).getRow(row).getCell(cell);
+ //value = c.getStringCellValue();
+}
+catch(Exception e)
+{
+	//Reporter.log("path is invalid",true);
+}
+return value;
 }
 
-
-
-//public class Excel implements Auto_const
-//{
-//public static String getcellvalue(String path,String sheet,int row,int cell)
-//{
-//	String value=" ";
-//try {
-//	FileInputStream fil=new FileInputStream(path);	
-//Workbook wb = WorkbookFactory.create(fil);
-//Cell c=wb.getSheet(sheet).getRow(row).getCell(cell);
-// value = c.getStringCellValue();
-//}
-//catch(Exception e)
-//{
-//	Reporter.log("path is invalid",true);
-//}
-//return value;
-//}
-//}
+}
